@@ -25,6 +25,15 @@
     --fw-regular: 400;
 }
 
+html {
+/*
+    When this property is specified on the root element, it applies to the viewport instead. This property specified on the body element will not propagate to the viewport.
+
+    Quand je le défini dans l'élément body ça ne fonctionne pas.
+*/
+    scroll-behavior: smooth;
+}
+
 /****** classes utilitaires ******/
 ol.remove-default,
 ul.remove-default {

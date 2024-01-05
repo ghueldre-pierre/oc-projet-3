@@ -1,0 +1,637 @@
+/****** General ***********/
+* {
+    font-family: 'Raleway', sans-serif;
+    box-sizing: border-box;
+}
+
+:root {
+    --main-color: #0065fc;
+    --main-bg-color: #f2f2f2;
+    --filter-bg-color: #deebff;
+    --filter-bd-color: #d9d9d9;
+
+    /* AJOUT */
+
+    --clr-neutral-100: hsl(0, 0%, 100%);
+
+    --fs-large: 22px;
+    --fs-medium: 18px;
+    --fs-medium-less: 17px;
+    --fs-regular: 16px;
+    --fs-small: 14px;
+
+    --fw-bold: 700;
+    --fw-semi-bold: 600;
+    --fw-regular: 400;
+}
+
+/****** classes utilitaires ******/
+ol.remove-default,
+ul.remove-default {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/***** selecteurs de types *******/
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a, button {
+    cursor: pointer;
+}
+
+button,
+input {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+h1, h2 {
+    font-size: var(--fs-large);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+
+    /*AJOUT*/
+    margin: 0;
+}
+
+.main-container {
+    /* AJOUT */
+    /* width: 100%; flex-basis est plus explicite */
+    flex-basis: 100%;
+    /* ------------------------------------------ */
+
+    max-width: 1440px;
+    padding: 0 50px;
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 0;
+    }
+}
+
+/* =========== */
+/* SITE HEADER */
+/* =========== */
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.site-header img {
+    width: 61px;
+    padding-block: 30px;
+}
+
+.site-header ul {
+    display: flex;
+}
+
+.site-header li {
+    margin-left: 70px;
+}
+
+.site-header a {
+    display: inline-block;
+    padding-block: 16px;
+    border-block: 3px solid transparent;
+}
+
+.site-header a:focus,
+.site-header a:hover {
+    border-top-color: var(--main-color);
+}
+
+@media (max-width: 768px) {
+    .site-header {
+        flex-direction: column;
+    }
+
+    .site-header li {
+        margin-left: 0;
+        flex-basis: 100%;
+        text-align: center;
+    }
+
+    .site-header a {
+        width: 100%;
+    }
+
+    .site-header a:focus,
+    .site-header a:hover {
+        border-top-color: transparent;
+        border-bottom-color: var(--main-color);
+    }
+
+    .site-header div {
+        text-align: center;
+    }
+}
+
+/* ==== */
+/* MAIN */
+/* ==== */
+
+main > * + * {
+    margin-top: 35px;
+}
+
+/* =========== */
+/* MAIN HEADER */
+/* =========== */
+
+main header > * {
+    margin-bottom: 35px;
+}
+
+@media (max-width: 768px) {
+    main header {
+        padding-inline: 20px;
+    }
+}
+
+/* H1 */
+
+.main-title {
+    display: block;
+}
+
+.main-subtitle {
+    font-size: var(--fs-regular);
+    font-weight: var(--fw-regular);
+}
+
+/* CITY SEARCH FORM */
+
+.city-search-form {
+    font-size: var(--fs-medium);
+    font-weight: var(--fw-bold);
+    /* Seul moyen trouvé pour enlever les « espaces » à gauche et à droite de l'input */
+    display: flex;
+}
+
+.city-search-form :is(button, input) {
+    border: none;
+    padding: 1rem;
+}
+
+.city-search-form input {
+    border-block: 1px solid var(--main-bg-color);
+
+    /* Permet à l'input de rétrécir lorsqu'il n'a plus de place */
+    width: 100%;
+    /* Correspond à la maquette */
+    max-width: 195px;
+    padding: 14px 24px;
+}
+
+.city-search-form button[type="button"] {
+    background-color: var(--main-bg-color);
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    padding-inline: 18px;
+}
+
+.city-search-form button[type="submit"] {
+    color: var(--clr-neutral-100);
+    background-color: var(--main-color);
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding-inline: 1rem;
+}
+
+.city-search-form button[type="submit"] > .icon {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .city-search-form button[type="submit"] {
+        filter: drop-shadow(0px 4px 4px hsl(0, 0%, 0%, 0.25));
+        border-radius: 1rem;
+        margin-left: -1rem;
+    }
+
+    .city-search-form button[type="submit"] .text {
+        display: none;
+    }
+    .city-search-form button[type="submit"] > .icon {
+        display: revert;
+    }
+}
+
+/* SEARCH FILTER SECTION */
+
+.search-filter-section {
+    font-weight: var(--fw-bold);
+}
+
+.search-filter-section :is(h2, ul, li) {
+    display: inline-block;
+}
+
+.search-filter-section h2 {
+    font-size: var(--fs-medium);
+    
+    /* 
+        Lorsque le titre « Filtres » passent au-dessus de la liste (max-width: 1024px),
+        les marges du titre et des "li" ne fusionnent pas ... je n'en connais pas encore la raison exacte
+        c'est ce qui explique que j'annule les marges ici, car les "li" doivent avoir une marge afin
+        qu'il y ait un espace entre-eux lorsqu'ils s'empilent (voir le sélecteur : .search-filter-section li)
+    */
+    margin: 0;
+}
+
+.search-filter-section ul {
+    font-size: var(--fs-medium-less);
+}
+
+.search-filter-section :is(h2, li) {
+    margin-inline-end: 15px;
+}
+
+.search-filter-section li {
+    margin-top: 20px;
+}
+
+.search-filter-section button {
+    background-color: var(--clr-neutral-100);
+    font-size: var(--fs-medium-less);
+    white-space: nowrap;
+    padding: 16px 19px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--filter-bd-color);
+    border-radius: 2em;
+}
+
+.search-filter-section button:hover {
+    background-color: var(--filter-bg-color);
+}
+
+.search-filter-section .icon {
+    margin-inline-end: 10px;
+}
+
+.search-filter-section .icon {
+    color: var(--main-color);
+}
+
+@media (max-width: 1024px) {
+    .search-filter-section h2 {
+        display: block;
+    }
+
+    .search-filter-section button {
+        font-size: var(--fs-regular);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-filter-section ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(169px, 1fr));
+    }
+
+    .search-filter-section button {
+        font-size: var(--fs-small);
+        width: 100%;
+        text-align: start;
+    }
+}
+
+/* LODGEMENT COUNT */
+.lodgement-count .icon {
+    color: var(--main-color);
+    margin-inline-end: 10px;
+}
+
+/* ============ */
+/* CARD SECTION */
+/* ============ */
+
+.card-section {
+    padding: 30px;
+}
+
+.card-section h2 {
+    margin: 0;
+}
+
+.card-section > * + * {
+    margin-top: 30px;
+}
+
+.card-section .icon {
+    color: var(--main-color);
+}
+
+/* ==== */
+/* CARD */
+/* ==== */
+
+.card {
+    font-size: var(--fs-small);
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px;
+    filter: drop-shadow(0px 3px 15px rgba(0, 0, 0, 0.1));
+}
+
+.card img {
+    object-fit: cover;
+}
+
+.card h3 {
+    font-size: var(--fs-regular);
+}
+
+.card .currency {
+    font-weight: var(--fw-semi-bold);
+}
+
+.card .rating .icon[data-state="full"] {
+    color: var(--main-color);
+}
+
+.card .rating .icon[data-state="empty"] {
+    color: var(--main-bg-color)
+}
+
+/* =========================== */
+/* HEBERGEMENTS-AND-POPULAIRES */
+/* =========================== */
+
+.hebergements-and-populaires {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hebergements-and-populaires .card-section {
+    background-color: var(--main-bg-color);
+    border-radius: 20px;
+}
+
+@media (max-width: 1024px) {
+    .hebergements-and-populaires {
+        flex-direction: column;
+        gap: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hebergements-and-populaires {
+        flex-direction: column-reverse;
+        gap: 15px;
+    }
+}
+
+/* ============ */
+/* HEBERGEMENTS */
+/* ============ */
+
+.hebergements {
+    width: 65%;
+}
+
+.hebergements button {
+    font-size: var(--fs-medium);
+    font-weight: var(--fw-bold);
+    border: none;
+    background-color: inherit;
+}
+
+.hebergements .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.hebergements .card {
+    display: block;
+}
+
+.hebergements img {
+    display: block;
+    width: 100%;
+
+    height: 116px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.hebergements .content {
+    padding-left: 10px;
+}
+
+.hebergements :is(h3, .subtitle, .rating) {
+    margin: 0;
+    margin-top: 8px;
+}
+
+.hebergements .rating {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 1024px) {
+    .hebergements {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .hebergements.card-section {
+        background-color: var(--clr-neutral-100);
+    }
+}
+
+/* ========== */
+/* POPULAIRES */
+/* ========== */
+
+.populaires {
+    width: 32%;
+}
+
+.populaires .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.populaires .container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.populaires .card {
+    display: flex;
+}
+
+.populaires img {
+    width: 33%;
+    height: 136px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.populaires .content {
+    width: 67%;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.populaires h3 {
+    margin-top: 10px;
+    margin-bottom: 4px;
+}
+
+.populaires .subtitle {
+    margin: 0;
+}
+
+.populaires .rating {
+    margin-bottom: 5px;
+}
+
+@media (max-width: 1024px) {
+    .populaires {
+        width: 100%;
+    }
+
+    .populaires .container {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .populaires a {
+        width: 30%;
+    }
+}
+
+@media (max-width: 768px) {
+    .populaires.card-section {
+        margin-top: 0;
+        border-radius: 0;
+    }
+
+    .populaires .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .populaires a {
+        width: 100%;
+    }
+}
+
+/* ========= */
+/* ACTIVITES */
+/* ========= */
+
+.activites .container {
+    display: flex;
+    gap: 30px;
+}
+
+.activites .card {
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    overflow: hidden;
+    padding: 0;
+
+    /* assure que chaque élément est de largeur égale */
+    width: 100%;
+}
+
+.activites article {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.activites img {
+    width: 100%;
+    height: 380px;
+}
+
+.activites .content {
+    flex-grow: 1;
+    display: table;
+    padding: 20px;
+}
+
+.activites h3 {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+@media (max-width: 1024px) {
+    .activites img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .activites .container {
+        flex-direction: column;
+    }
+
+    .activites img {
+        height: 141px;
+    }
+}
+
+/* ====== */
+/* FOOTER */
+/* ====== */
+
+footer {
+    background-color: var(--main-bg-color);
+    display: flex;
+}
+
+/* Utilisation de la classe "column" pour augmmenter la spécificité  */
+
+footer .column {
+    width: 100%;
+    padding: 20px;
+}
+
+footer h2 {
+    font-size: var(--fs-medium);
+}
+
+footer .column * {
+    margin: 0;
+}
+
+footer .column * + * {
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    footer {
+        display: revert;
+        padding: 30px;
+    }
+
+    footer .column {
+        padding: 0;
+    }
+
+    footer .column + .column {
+        margin-top: 50px;
+    }
+}
